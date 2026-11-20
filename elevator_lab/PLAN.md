@@ -1,0 +1,9 @@
+# My agent plan
+
+Fill in the brackets before delegation. This is a template, not a completed plan.
+
+- Dispatcher builder owns dispatcher.py: implement my 4-step rule from POLICY.md using `rules.eligible_ids`: (1) pick a car that already has a scheduled stop at the caller's floor, (2) else pick a moving car with load <= 260 kg, (3) else pick the nearest car by floor distance, (4) tie goes to A. Return `Decision(None, reason)` if no car is eligible. Every reason must name the rule that decided it.
+- Display builder owns app.py: implement `run_scenarios` following SPEC.md R4 and the shared interfaces. For each scenario, print its name, both elevators' state and the request. Call `choose_elevator` exactly once, then print `Selected: A`, `Selected: B` or `Selected: WAIT` plus the reason. Return the decisions in order (`[]` for an empty list). No dispatch logic in app.py.
+- Reviewer is read-only after both outputs are integrated: check SPEC.md rules R1-R5, whether dispatcher.py matches my POLICY.md exactly (including the 260 kg boundary), the app/dispatcher interface, and one concrete tradeoff. It must label each concern as a defect, an inconsistency or a tradeoff.
+- Handoff steps: confirm my Python command, give each builder SPEC.md, POLICY.md, PLAN.md, AGENTS.md and all Python files, wait for both to finish, inspect the diff, run the tests, then give the reviewer the current combined files without the builders' claims.
+- Final check: run `python app.py` and compare the actual choices for S1, S2 and S6 with my predictions in POLICY.md (A, B, A). Investigate any mismatch before changing anything, and don't edit predictions just to match the output.
